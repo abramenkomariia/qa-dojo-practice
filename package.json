@@ -1,0 +1,14 @@
+{
+  "name": "qa_mojo_practive", 
+  "version": "1.0.0", 
+  "main": "index.js",
+  "scripts": {},
+  "keywords": ["testing"],
+  "author": "maribram",
+  "license": "ISC",
+  "description": "automation of the main functionality of the lalafo project",
+  "devDependencies": {
+    "@playwright/test": "^1.46.1",
+    "@types/node": "^20.16.0"
+  }
+}
