@@ -24,6 +24,7 @@ test('DV-2 search and filtering', async ({ page }) => {
     await page.getByPlaceholder('Цена от').fill('10000');
     await expect(page.frameLocator('iframe[title="Opens a widget where you can find more information"]').getByTestId('launcher')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Поиск' })).toBeVisible();
+    //to
   });
 
   

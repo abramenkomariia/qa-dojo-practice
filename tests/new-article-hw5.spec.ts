@@ -1,23 +1,44 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Locator} from '@playwright/test';
+import exp from 'constants';
+
 
 test('hw-5', async ({ page }) => {
     let x = Math.random() * 10;
     await page.goto('https://demo.learnwebdriverio.com/');
-    await page.locator('//a[@href="/login"]').click();
-    await expect(page.locator('//button[@class="btn btn-lg btn-primary pull-xs-right"]')).toBeVisible();
-    await page.locator('//input[@type="email"]').fill("abramenko.mariia@gmail.com");
-    await page.locator('//input[@type="password"]').fill("12345");
-    await page.locator('//button[@class="btn btn-lg btn-primary pull-xs-right"]').click();
-    await expect(page.locator("//a[contains(text(),'mariia')]/parent::li")).toBeVisible();
-    await page.locator('//*[@href="/editor"]').click();
+    const loginButton: Locator = page.locator('//a[@href="/login"]');
+    const emailInput: Locator = page.locator('//input[@type="email"]');
+    const passInput: Locator = page.locator('//input[@type="password"]');
+    const signInButton: Locator = page.locator('//button[@class="btn btn-lg btn-primary pull-xs-right"]');
+    const usernameHeader: Locator = page.locator("//a[contains(text(),'mari')]/parent::li");
+    const newArticle: Locator = page.locator('//*[@href="/editor"]');
     let title = 'test mariia' + x;
-    await page.locator('//input[@placeholder="Article Title"]').fill(title);
-    await page.locator("//input[@data-qa-id='editor-description']").fill('about masha');
-    await page.locator("//div[@class='auto-textarea-wrapper content-input']/textarea").fill('test info');
-    await page.locator("//div[@class='auto-textarea-wrapper content-input']/textarea").click();
+    const articleTitle: Locator = page.locator('//input[@placeholder="Article Title"]');
+    const editorDesc: Locator = page.locator("//input[@data-qa-id='editor-description']");
+    const articleBody: Locator = page.locator("//div[@class='auto-textarea-wrapper content-input']/textarea");
+    const boldText: Locator = page.locator("//button[@class='op-icon fa fa-mavon-bold']");          
+    const articleTags: Locator = page.locator('//input[@placeholder="Enter tags"]');
+    const articleSubmit: Locator = page.locator('//button[@type="submit"]');
+    const userArticleTitle: Locator = page.locator('//h1[@data-qa-id="article-title"]');
+
+
+
+    await loginButton.click();
+    await emailInput.fill("abramenko.mariia@gmail.com");
+    await passInput.fill("12345");
+    await signInButton.isVisible;
+    await signInButton.click();
+    await usernameHeader.isVisible();
+    await newArticle.click();
+    await articleTitle.fill(title);
+    await editorDesc.fill('about masha');
+    await articleBody.fill('test info');
+    await articleBody.click();
     await page.keyboard.press('Meta+A');
-    await page.locator("//button[@class='op-icon fa fa-mavon-bold']").click();
-    await page.locator('//input[@placeholder="Enter tags"]').fill('masha1502');
-    await page.locator('//button[@type="submit"]').click();
+    await boldText.click();
+    await articleTags.fill('masha1502');
+    await articleSubmit.click();
+    await expect(userArticleTitle).toHaveText(title);
+
+    
     await expect(page.locator('//h1[@data-qa-id="article-title"]')).toHaveText(title);
 });
